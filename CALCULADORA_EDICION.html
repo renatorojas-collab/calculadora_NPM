@@ -3,56 +3,63 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Calculadora de Riesgo</title>
+
+<!-- PWA -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0066ff">
 
 <style>
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   background: #f4f7fb;
+  margin: 0;
+  padding: 15px;
 }
 
 .container {
   max-width: 520px;
-  margin: 40px auto;
+  margin: auto;
   background: white;
-  padding: 30px;
+  padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
 }
 
-h2 { text-align: center; }
+h2 {
+  text-align: center;
+}
 
 .label {
   margin-top: 15px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
 }
 
 .subtext {
   font-size: 12px;
   color: #666;
-  margin-top: 3px;
 }
 
 input {
   width: 100%;
-  padding: 10px;
-  margin-top: 5px;
-  border-radius: 8px;
+  padding: 14px;
+  margin-top: 6px;
+  border-radius: 10px;
   border: 1px solid #ddd;
+  font-size: 16px;
 }
 
 /* Quitar flechas */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
-  margin: 0;
 }
 input[type=number] {
   -moz-appearance: textfield;
 }
 
-/* TOGGLES */
 .toggle-group {
   display: flex;
   gap: 10px;
@@ -61,8 +68,8 @@ input[type=number] {
 
 .toggle-btn {
   flex: 1;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 14px;
+  border-radius: 10px;
   border: 1px solid #ccc;
   background: #f8f9fb;
   cursor: pointer;
@@ -76,40 +83,38 @@ input[type=number] {
   border-color: #20c997;
 }
 
-/* BOTONES */
 button {
   width: 100%;
   margin-top: 20px;
-  padding: 14px;
+  padding: 16px;
   background: #0066ff;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 12px;
   font-size: 16px;
   cursor: pointer;
 }
 
-/* RESULTADO CLÍNICO */
 .result-card {
   margin-top: 25px;
-  padding: 25px;
+  padding: 20px;
   border-radius: 12px;
-  background: #1f7a63;
-  color: white;
+  background: white;
+  border: 1px solid #ddd;
+  text-align: center;
 }
 
 .result-value {
-  font-size: 36px;
+  font-size: 32px;
   font-weight: bold;
 }
 
 .result-title {
-  margin-top: 10px;
+  margin-top: 8px;
   font-size: 14px;
-  opacity: 0.9;
+  color: #555;
 }
 
-/* FORMULA */
 .formula-btn {
   background: #f1f3f6;
   color: #333;
@@ -123,9 +128,14 @@ button {
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 13px;
-  line-height: 1.5;
 }
 
+/* Mobile */
+@media (max-width: 480px) {
+  .container {
+    padding: 15px;
+  }
+}
 </style>
 </head>
 
@@ -144,8 +154,8 @@ button {
 
 <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Parcialmente sólido</div>
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 2)">Sólido</div>
+  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Partial-solid</div>
+  <div class="toggle-btn" onclick="selectToggle('densidad', this, 2)">Solid</div>
 </div>
 
 <label class="label">Historial respiratorio</label>
@@ -168,7 +178,6 @@ button {
 
 <button onclick="calcular()">Calcular</button>
 
-<!-- RESULTADO -->
 <div id="resultado" class="result-card" style="display:none;">
   <div class="result-value" id="valor"></div>
   <div class="result-title">Probabilidad de malignidad</div>
@@ -177,9 +186,7 @@ button {
 <button class="formula-btn" onclick="toggleFormula()">Ver fórmula</button>
 
 <div id="formulaBox" class="formula-box">
-  <b>FÓRMULA</b><br><br>
-  Probabilidad = 100 × e<sup>X</sup> / (1 + e<sup>X</sup>)<br><br>
-  <b>Donde:</b><br>
+  Probabilidad = 100 × e^X / (1 + e^X)<br><br>
   X = (0.0943×edad) − (0.0501×tamaño) + (0.3395×densidad) − (1.9429×resp) − (0.0898×onc) + (4.6207×crec) − 5.1058
 </div>
 
@@ -232,7 +239,7 @@ function calcular() {
          - 5.1058);
 
   let P = Math.exp(X) / (1 + Math.exp(X));
-  let porcentaje = (P * 100).toFixed(2);
+  let porcentaje = (P * 100).toFixed(1);
 
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
@@ -241,6 +248,11 @@ function calcular() {
 function toggleFormula() {
   let box = document.getElementById("formulaBox");
   box.style.display = (box.style.display === "block") ? "none" : "block";
+}
+
+/* SERVICE WORKER */
+if ("serviceWorker" in navigator) {
+  navigator.serviceWorker.register("sw.js");
 }
 
 </script>
