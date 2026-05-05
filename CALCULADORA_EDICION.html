@@ -15,7 +15,7 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   background: #f4f7fb;
   margin: 0;
-  padding: 15px;
+  padding: env(safe-area-inset-top, 20px) 15px 15px 15px;
 }
 
 .container {
@@ -25,16 +25,20 @@ body {
   padding: 20px;
   border-radius: 16px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  margin-top: 10px;
 }
 
 h2 {
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 25px;
 }
 
 .label {
   margin-top: 15px;
   font-size: 14px;
   font-weight: 600;
+  display: block; /* Asegura que el label ocupe su línea */
 }
 
 .subtext {
@@ -49,9 +53,9 @@ input {
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 16px;
+  box-sizing: border-box; /* Evita que el padding ensanche el input */
 }
 
-/* Quitar flechas */
 input[type=number]::-webkit-outer-spin-button,
 input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -231,12 +235,12 @@ function calcular() {
   }
 
   let X = (0.0943 * edad
-         - 0.0501 * tamano
-         + 0.3395 * valores.densidad
-         - 1.9429 * valores.resp
-         - 0.0898 * valores.onc
-         + 4.6207 * valores.crec
-         - 5.1058);
+          - 0.0501 * tamano
+          + 0.3395 * valores.densidad
+          - 1.9429 * valores.resp
+          - 0.0898 * valores.onc
+          + 4.6207 * valores.crec
+          - 5.1058);
 
   let P = Math.exp(X) / (1 + Math.exp(X));
   let porcentaje = (P * 100).toFixed(1);
