@@ -6,6 +6,7 @@
 
 <title>Riesgo de malignidad primaria de nódulo/masa solitaria</title>
 
+<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0066ff">
   
@@ -248,12 +249,9 @@ function calcular() {
   // Guardar en Google Sheets
   fetch(URL, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
     body: JSON.stringify({
-      edad,
-      tamano,
+      edad: edad,
+      tamano: tamano,
       densidad: valores.densidad,
       resp: valores.resp,
       onc: valores.onc,
