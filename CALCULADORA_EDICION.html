@@ -231,12 +231,17 @@ function calcular() {
           - 5.1058);
 
   let P = Math.exp(X) / (1 + Math.exp(X));
-  let porcentaje = (P * 100).toFixed(1);
+  let porcentaje = (P * 100).toFixed(2);
 
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
 
-  // 🔥 GUARDAR EN GOOGLE SHEETS
+  function toggleFormula() {
+  let box = document.getElementById("formulaBox");
+  box.style.display = (box.style.display === "block") ? "none" : "block";
+  }
+  
+  // GUARDAR REGISTROS EN GOOGLE SHEETS
   fetch(URL, {
     method: "POST",
     body: JSON.stringify({
