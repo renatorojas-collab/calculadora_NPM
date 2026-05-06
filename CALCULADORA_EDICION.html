@@ -206,17 +206,12 @@ let valores = {
   crec: null
 };
 
-function selectToggle(grupo, el, valor) {
+function selectToggle(grupo, elem, valor) {
   let botones = document.getElementById(grupo).children;
   for (let b of botones) b.classList.remove("active");
-  el.classList.add("active");
+  elem.classList.add("active");
   valores[grupo] = valor;
 }
-
-function toggleFormula() {
-  let box = document.getElementById("formulaBox");
-  box.style.display = (box.style.display === "block") ? "none" : "block";
-  }
 
 function calcular() {
 
@@ -255,12 +250,7 @@ function calcular() {
 
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
-
- // function toggleFormula() {
- // let box = document.getElementById("formulaBox");
- // box.style.display = (box.style.display === "block") ? "none" : "block";
- // }
-  
+ 
   // GUARDAR REGISTROS EN GOOGLE SHEETS
   fetch(URL, {
     method: "POST",
@@ -278,6 +268,11 @@ function calcular() {
   .then(data => console.log("Guardado OK"))
   .catch(err => console.error("Error", err));
 }
+
+function toggleFormula() {
+  let box = document.getElementById("formulaBox");
+  box.style.display = (box.style.display === "block") ? "none" : "block";
+  }
 
 </script>
 
