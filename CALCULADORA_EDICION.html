@@ -201,27 +201,6 @@ function calcular() {
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
 
-  // 🔥 ENVÍO A GOOGLE SHEETS
-  fetch("https://script.google.com/macros/s/AKfycbyx5c1pmsSOAqpxXf0Ux4TVFzFlulKN8AIQRftevci7hRoyzLqBpVDu85FjHY8j6G4/exec", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      edad: edad,
-      tamano: tamano,
-      densidad: valores.densidad,
-      resp: valores.resp,
-      onc: valores.onc,
-      crec: valores.crec,
-      resultado: porcentaje
-    })
-  })
-  .then(res => res.text())
-  .then(data => console.log("Guardado:", data))
-  .catch(err => console.error("Error:", err));
-}
-
 </script>
 
 </body>
