@@ -6,18 +6,18 @@
 
 <title>Riesgo de malignidad primaria de nódulo/masa solitaria</title>
 
-<!-- PWA -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0066ff">
   
 <style>
-* { box-sizing: border-box; } /* Agrégalo al principio de todo */
+* { box-sizing: border-box; }
+
 body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
   background: #f4f7fb;
   margin: 0;
   padding: env(safe-area-inset-top, 20px) 15px 15px 15px;
-  display: flex; /* Opcional: ayuda a centrar verticalmente en PC */
+  display: flex;
   justify-content: center;
 }
 
@@ -41,7 +41,7 @@ h2 {
   margin-top: 15px;
   font-size: 14px;
   font-weight: 600;
-  display: block; /* Asegura que el label ocupe su línea */
+  display: block;
 }
 
 .subtext {
@@ -56,17 +56,8 @@ input {
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 16px;
-  box-sizing: border-box; /* Evita que el padding ensanche el input */
 }
 
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-}
-  
 .toggle-group { display: flex; gap: 10px; margin-top: 8px; }
 
 .toggle-btn {
@@ -122,8 +113,11 @@ button {
   color: #333;
 }
 
-.formula-box {
+.hidden {
   display: none;
+}
+
+.formula-box {
   margin-top: 15px;
   padding: 15px;
   background: #fafafa;
@@ -132,13 +126,11 @@ button {
   font-size: 13px;
 }
 
-/* Mobile */
 @media (max-width: 480px) {
   .container {
     padding: 15px;
   }
 }
-  
 </style>
 </head>
 
@@ -149,11 +141,11 @@ button {
 <h2>Riesgo de malignidad primaria de nódulo/masa solitaria</h2>
 
 <label class="label">Edad (años)</label>
-<input type="number" id="edad" min="0">
+<input type="number" id="edad">
 
 <label class="label">Tamaño (mm)</label>
 <div class="subtext">Rango permitido: 12 – 120 mm</div>
-<input type="number" id="tamano" min="12" max="120">
+<input type="number" id="tamano">
 
 <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
@@ -181,14 +173,14 @@ button {
 
 <button onclick="calcular()">Calcular</button>
 
-<div id="resultado" class="result-card" style="display:none;">
+<div id="resultado" class="result-card hidden">
   <div class="result-value" id="valor"></div>
   <div class="result-title">Probabilidad de malignidad</div>
 </div>
 
 <button class="formula-btn" onclick="toggleFormula()">Ver fórmula</button>
 
-<div id="formulaBox" class="formula-box">
+<div id="formulaBox" class="formula-box hidden">
   Probabilidad = 100 × e^X / (1 + e^X)<br><br>
   X = (0.0943×edad) − (0.0501×tamaño) + (0.3395×densidad) − (1.9429×resp) − (0.0898×onc) + (4.6207×crec) − 5.1058
 </div>
@@ -215,8 +207,8 @@ function selectToggle(grupo, el, valor) {
 
 function toggleFormula() {
   let box = document.getElementById("formulaBox");
-  box.style.display = (box.style.display === "block") ? "none" : "block";
-  }
+  box.classList.toggle("hidden");
+}
 
 function calcular() {
 
@@ -228,7 +220,7 @@ function calcular() {
       valores.resp === null ||
       valores.onc === null ||
       valores.crec === null) {
-    alert("Completa todo los campos");
+    alert("Completa todos los campos");
     return;
   }
 
@@ -238,7 +230,7 @@ function calcular() {
   }
 
   if (tamano < 12 || tamano > 120) {
-    alert("EL TAMAÑO DEBE ESTAR EN EL RANGO DE 12 y 120 mm");
+    alert("EL TAMAÑO DEBE ESTAR ENTRE 12 y 120 mm");
     return;
   }
   
@@ -253,15 +245,18 @@ function calcular() {
   let P = Math.exp(X) / (1 + Math.exp(X));
   let porcentaje = (P * 100).toFixed(2);
 
-  document.getElementById("resultado").style.display = "block";
+  document.getElementById("resultado").classList.remove("hidden");
   document.getElementById("valor").innerHTML = porcentaje + " %";
- 
-  // GUARDAR REGISTROS EN GOOGLE SHEETS
+
+  // Guardar en Google Sheets
   fetch(URL, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
     body: JSON.stringify({
-      edad: edad,
-      tamano: tamano,
+      edad,
+      tamano,
       densidad: valores.densidad,
       resp: valores.resp,
       onc: valores.onc,
