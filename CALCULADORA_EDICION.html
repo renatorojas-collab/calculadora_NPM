@@ -56,6 +56,7 @@ input {
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 16px;
+  box-sizing: border-box; /* Evita que el padding ensanche el input */
 }
 
 .toggle-group { display: flex; gap: 10px; margin-top: 8px; }
@@ -113,10 +114,6 @@ button {
   color: #333;
 }
 
-.hidden {
-  display: none;
-}
-
 .formula-box {
   margin-top: 15px;
   padding: 15px;
@@ -141,11 +138,11 @@ button {
 <h2>Riesgo de malignidad primaria de nódulo/masa solitaria</h2>
 
 <label class="label">Edad (años)</label>
-<input type="number" id="edad">
+<input type="number" id="edad" min="0">
 
 <label class="label">Tamaño (mm)</label>
 <div class="subtext">Rango permitido: 12 – 120 mm</div>
-<input type="number" id="tamano">
+<input type="number" id="tamano" min="12" max="120">
 
 <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
@@ -173,7 +170,7 @@ button {
 
 <button onclick="calcular()">Calcular</button>
 
-<div id="resultado" class="result-card hidden">
+<div id="resultado" class="result-card style="display:none;">
   <div class="result-value" id="valor"></div>
   <div class="result-title">Probabilidad de malignidad</div>
 </div>
@@ -207,7 +204,7 @@ function selectToggle(grupo, el, valor) {
 
 function toggleFormula() {
   let box = document.getElementById("formulaBox");
-  box.classList.toggle("hidden");
+  box.style.display = (box.style.display === "block") ? "none" : "block";
 }
 
 function calcular() {
@@ -245,7 +242,7 @@ function calcular() {
   let P = Math.exp(X) / (1 + Math.exp(X));
   let porcentaje = (P * 100).toFixed(2);
 
-  document.getElementById("resultado").classList.remove("hidden");
+  document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
 
   // Guardar en Google Sheets
