@@ -250,6 +250,22 @@ function calcular() {
 
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
+
+  fetch("https://script.google.com/macros/s/AKfycbz2dqXDDqrYA6KLBPblfBkyzi4Z1Jy0-8Qj-Kls6tWWAx8bYTUbjfVKihn7aB98QCk/exec", {
+  method: "POST",
+  body: JSON.stringify({
+    edad: edad,
+    tamano: tamano,
+    densidad: valores.densidad,
+    resp: valores.resp,
+    onc: valores.onc,
+    crec: valores.crec,
+    resultado: porcentaje
+  })
+})
+.then(res => res.json())
+.then(data => console.log("GUARDADO OK"))
+.catch(err => console.error("ERROR AL GUARDAR", err));
 }
 
 function toggleFormula() {
