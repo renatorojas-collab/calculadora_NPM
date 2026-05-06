@@ -2,23 +2,16 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Riesgo de malignidad primaria de nódulo/masa solitaria</title>
-
-<!-- PWA -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#0066ff">
+<title>Riesgo de malignidad</title>
 
 <style>
-* { box-sizing: border-box; } /* Agrégalo al principio de todo */
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto;
+  font-family: Arial;
   background: #f4f7fb;
   margin: 0;
-  padding: env(safe-area-inset-top, 20px) 15px 15px 15px;
-  display: flex; /* Opcional: ayuda a centrar verticalmente en PC */
-  justify-content: center;
+  padding: 15px;
 }
 
 .container {
@@ -27,121 +20,45 @@ body {
   background: white;
   padding: 20px;
   border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-  margin-top: 10px;
 }
 
-h2 {
-  text-align: center;
-  margin-top: 10px;
-  margin-bottom: 25px;
-}
-
-.label {
-  margin-top: 15px;
-  font-size: 14px;
-  font-weight: 600;
-  display: block; /* Asegura que el label ocupe su línea */
-}
-
-.subtext {
-  font-size: 12px;
-  color: #666;
-}
+.label { margin-top: 15px; font-weight: bold; }
 
 input {
   width: 100%;
-  padding: 14px;
-  margin-top: 6px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 16px;
-  box-sizing: border-box; /* Evita que el padding ensanche el input */
+  padding: 12px;
+  margin-top: 5px;
 }
 
-input[type=number]::-webkit-outer-spin-button,
-input[type=number]::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-}
-input[type=number] {
-  -moz-appearance: textfield;
-}
-
-.toggle-group {
-  display: flex;
-  gap: 10px;
-  margin-top: 8px;
-}
+.toggle-group { display: flex; gap: 10px; margin-top: 5px; }
 
 .toggle-btn {
   flex: 1;
-  padding: 14px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  background: #f8f9fb;
-  cursor: pointer;
+  padding: 12px;
+  background: #eee;
   text-align: center;
+  cursor: pointer;
 }
 
-/* Verde agua */
 .toggle-btn.active {
   background: #20c997;
   color: white;
-  border-color: #20c997;
 }
 
 button {
   width: 100%;
   margin-top: 20px;
-  padding: 16px;
+  padding: 15px;
   background: #0066ff;
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 16px;
-  cursor: pointer;
 }
 
 .result-card {
-  margin-top: 25px;
-  padding: 20px;
-  border-radius: 12px;
-  background: white;
+  margin-top: 20px;
+  padding: 15px;
   border: 1px solid #ddd;
   text-align: center;
-}
-
-.result-value {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-.result-title {
-  margin-top: 8px;
-  font-size: 14px;
-  color: #555;
-}
-
-.formula-btn {
-  background: #f1f3f6;
-  color: #333;
-}
-
-.formula-box {
-  display: none;
-  margin-top: 15px;
-  padding: 15px;
-  background: #fafafa;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-  font-size: 13px;
-}
-
-/* Mobile */
-@media (max-width: 480px) {
-  .container {
-    padding: 15px;
-  }
 }
 </style>
 </head>
@@ -150,34 +67,33 @@ button {
 
 <div class="container">
 
-<h2>Riesgo de malignidad primaria de nódulo/masa solitaria</h2>
+<h2>Riesgo de malignidad</h2>
 
-<label class="label">Edad (años)</label>
-<input type="number" id="edad" min="0">
+<label class="label">Edad</label>
+<input type="number" id="edad">
 
 <label class="label">Tamaño (mm)</label>
-<div class="subtext">Rango permitido: 12 – 120 mm</div>
-<input type="number" id="tamano" min="12" max="120">
+<input type="number" id="tamano">
 
 <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Parcialmente sólido</div>
+  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Parcial</div>
   <div class="toggle-btn" onclick="selectToggle('densidad', this, 2)">Sólido</div>
 </div>
 
-<label class="label">Historial enfermedad respiratoria</label>
+<label class="label">Respiratorio</label>
 <div class="toggle-group" id="resp">
   <div class="toggle-btn" onclick="selectToggle('resp', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('resp', this, 1)">Sí</div>
 </div>
 
-<label class="label">Historial oncológico</label>
+<label class="label">Oncológico</label>
 <div class="toggle-group" id="onc">
   <div class="toggle-btn" onclick="selectToggle('onc', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('onc', this, 1)">Sí</div>
 </div>
 
-<label class="label">Crecimiento tumoral</label>
+<label class="label">Crecimiento</label>
 <div class="toggle-group" id="crec">
   <div class="toggle-btn" onclick="selectToggle('crec', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('crec', this, 1)">Sí</div>
@@ -186,20 +102,14 @@ button {
 <button onclick="calcular()">Calcular</button>
 
 <div id="resultado" class="result-card" style="display:none;">
-  <div class="result-value" id="valor"></div>
-  <div class="result-title">Probabilidad de malignidad</div>
-</div>
-
-<button class="formula-btn" onclick="toggleFormula()">Ver fórmula</button>
-
-<div id="formulaBox" class="formula-box">
-  Probabilidad = 100 × e^X / (1 + e^X)<br><br>
-  X = (0.0943×edad) − (0.0501×tamaño) + (0.3395×densidad) − (1.9429×resp) − (0.0898×onc) + (4.6207×crec) − 5.1058
+  <div id="valor"></div>
 </div>
 
 </div>
 
 <script>
+
+const URL = "https://script.google.com/macros/s/AKfycbz2dqXDDqrYA6KLBPblfBkyzi4Z1Jy0-8Qj-Kls6tWWAx8bYTUbjfVKihn7aB98QCk/exec"; 
 
 let valores = {
   densidad: null,
@@ -208,10 +118,10 @@ let valores = {
   crec: null
 };
 
-function selectToggle(grupo, elemento, valor) {
+function selectToggle(grupo, el, valor) {
   let botones = document.getElementById(grupo).children;
-  for (let btn of botones) btn.classList.remove("active");
-  elemento.classList.add("active");
+  for (let b of botones) b.classList.remove("active");
+  el.classList.add("active");
   valores[grupo] = valor;
 }
 
@@ -221,19 +131,11 @@ function calcular() {
   let tamano = parseFloat(document.getElementById("tamano").value);
 
   if (isNaN(edad) || isNaN(tamano) ||
-      valores.densidad === null || valores.resp === null ||
-      valores.onc === null || valores.crec === null) {
-    alert("Completa todos los campos");
-    return;
-  }
-
-  if (edad < 0) {
-    alert("VERIFICAR EDAD");
-    return;
-  }
-
-  if (tamano < 12 || tamano > 120) {
-    alert("EL TAMAÑO DEBE ESTAR EN EL RANGO DE 12 y 120 mm");
+      valores.densidad === null ||
+      valores.resp === null ||
+      valores.onc === null ||
+      valores.crec === null) {
+    alert("Completa todo");
     return;
   }
 
@@ -251,31 +153,22 @@ function calcular() {
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
 
-  fetch("https://script.google.com/macros/s/AKfycbz2dqXDDqrYA6KLBPblfBkyzi4Z1Jy0-8Qj-Kls6tWWAx8bYTUbjfVKihn7aB98QCk/exec", {
-  method: "POST",
-  body: JSON.stringify({
-    edad: edad,
-    tamano: tamano,
-    densidad: valores.densidad,
-    resp: valores.resp,
-    onc: valores.onc,
-    crec: valores.crec,
-    resultado: porcentaje
+  // 🔥 GUARDAR EN GOOGLE SHEETS
+  fetch(URL, {
+    method: "POST",
+    body: JSON.stringify({
+      edad: edad,
+      tamano: tamano,
+      densidad: valores.densidad,
+      resp: valores.resp,
+      onc: valores.onc,
+      crec: valores.crec,
+      resultado: porcentaje
+    })
   })
-})
-.then(res => res.json())
-.then(data => console.log("GUARDADO OK"))
-.catch(err => console.error("ERROR AL GUARDAR", err));
-}
-
-function toggleFormula() {
-  let box = document.getElementById("formulaBox");
-  box.style.display = (box.style.display === "block") ? "none" : "block";
-}
-
-/* SERVICE WORKER */
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("sw.js");
+  .then(res => res.json())
+  .then(data => console.log("Guardado OK"))
+  .catch(err => console.error("Error", err));
 }
 
 </script>
