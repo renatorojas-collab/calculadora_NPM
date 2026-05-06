@@ -213,6 +213,11 @@ function selectToggle(grupo, el, valor) {
   valores[grupo] = valor;
 }
 
+function toggleFormula() {
+  let box = document.getElementById("formulaBox");
+  box.style.display = (box.style.display === "block") ? "none" : "block";
+  }
+
 function calcular() {
 
   let edad = parseFloat(document.getElementById("edad").value);
@@ -251,10 +256,10 @@ function calcular() {
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
 
-  function toggleFormula() {
-  let box = document.getElementById("formulaBox");
-  box.style.display = (box.style.display === "block") ? "none" : "block";
-  }
+ // function toggleFormula() {
+ // let box = document.getElementById("formulaBox");
+ // box.style.display = (box.style.display === "block") ? "none" : "block";
+ // }
   
   // GUARDAR REGISTROS EN GOOGLE SHEETS
   fetch(URL, {
