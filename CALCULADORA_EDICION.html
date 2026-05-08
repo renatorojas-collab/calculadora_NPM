@@ -159,8 +159,7 @@ button {
 <input type="number" id="edad" min="0">
 
 <label class="label">Tamaño del tumor (mm)</label>
-<div class="subtext">Rango permitido: 12 – 120 mm</div>
-<input type="number" id="tamano" min="12" max="120">
+<input type="number" id="tamano" min="0">
 
 <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
@@ -209,6 +208,10 @@ button {
 <div id="formulaBox" class="formula-box">
   Probabilidad = 100 × e^X / (1 + e^X)<br><br>
   X = (0.0943×edad) − (0.0501×tamaño) + (0.3395×densidad) − (1.9429×resp) − (0.0898×onc) + (4.6207×crec) − 5.1058
+  donde:
+  resp = Enfermedad broncopulmonar previa
+  onc = Antecedente oncológico
+  crec = Crecimiento del tumor
 </div>
   
 </div>
@@ -250,8 +253,8 @@ function calcular() {
     return;
   }
 
-  if (tamano < 12 || tamano > 120) {
-    alert("EL TAMAÑO DEBE ESTAR EN EL RANGO DE 12 y 120 mm");
+  if (tamano < 0) {
+    alert("VERIFICAR TAMAÑO");
     return;
   }
   
