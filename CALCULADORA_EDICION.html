@@ -116,6 +116,13 @@ button {
   font-size: 14px;
   color: #555;
 }
+  
+.result-riesgo {
+  margin-top: 8px;
+  font-size: 10px;
+  color: #555;
+  text-align: left;
+}
 
 .formula-btn {
   background: #f1f3f6;
@@ -191,14 +198,10 @@ button {
 <div id="resultado" class="result-card" style="display:none;">
   <div class="result-value" id="valor"></div>
   <div class="result-title">Probabilidad de malignidad</div>
+  <div class="result-riesgo">Riesgo Bajo: <35%</div>
+  <div class="result-riesgo">Riesgo Medio: 35% - 70%</div>
+  <div class="result-riesgo">Riesgo Alto: >70%</div>
 </div>
-
-<div id="resultado" class="result-card" style="display:none;">
-  <div class="result-value" id="valor"></div>
-  <div class="result-title">Probabilidad de malignidad</div>
-  <div class="result-title">Riesgo Bajo: <35%</div>
-  <div class="result-title">Riesgo Medio: 35% - 70%</div>
-  <div class="result-title">Riesgo Alto: >70%</div>
   
 <button class="formula-btn" onclick="toggleFormula()">Ver fórmula</button>
 
