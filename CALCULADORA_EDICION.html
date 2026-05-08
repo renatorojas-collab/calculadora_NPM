@@ -196,21 +196,18 @@ button {
 <div id="resultado" class="result-card" style="display:none;">
   <div class="result-value" id="valor"></div>
   <div class="result-title">Probabilidad de malignidad</div>
-  <div class="risk-legend">
-    <div><strong>Riesgo Bajo Risk</strong> &lt; 35%</div>
-    <div><strong>Riesgo Medio</strong> 35% – 70%</div>
-    <div><strong>Riesgo Alto</strong> &gt; 70%</div>
-  </div>
-</div>
-
+  <div class="result-title">Riesgo Bajo: <35%</div>
+  <div class="result-title">Riesgo Medio: 35% - 70%</div>
+  <div class="result-title">Riesgo Alto: >70%</div>
+  
 <button class="formula-btn" onclick="toggleFormula()">Ver fórmula</button>
 
 <div id="formulaBox" class="formula-box">
   Probabilidad = 100 × e^X / (1 + e^X)<br><br>
   X = (0.0943×edad) − (0.0501×tamaño) + (0.3395×densidad) − (1.9429×resp) − (0.0898×onc) + (4.6207×crec) − 5.1058
-  donde:
-  resp = Enfermedad broncopulmonar previa
-  onc = Antecedente oncológico
+  donde: <br>
+  resp = Enfermedad broncopulmonar previa <br>
+  onc = Antecedente oncológico<br>
   crec = Crecimiento del tumor
 </div>
   
