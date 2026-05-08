@@ -218,7 +218,7 @@ button {
 
 <script>
 
-const URL = "https://script.google.com/macros/s/AKfycbyNsapUSLjuX56dzAECEmGzneG6dZtfbYwuvPzmILFvT6VPP-05ifwyK91BhrNYuVAI/exec"; 
+const URL = "https://script.google.com/macros/s/AKfycbwZ8HDE5fmi-eCUO4dcyOhzVzUHgEzNgDxUA7kCT89hMyh5Z67GyCXwTnyEHX-zOnKr/exec"; 
   
 let valores = {
   densidad: null,
@@ -285,23 +285,24 @@ function calcular() {
 document.getElementById("riskCategory").innerText = categoria;
 
     // GUARDAR REGISTROS EN GOOGLE SHEETS
-  fetch(URL, {
-    method: "POST",
-    body: JSON.stringify({
-      edad: edad,
-      tamano: tamano,
-      densidad: valores.densidad,
-      resp: valores.resp,
-      onc: valores.onc,
-      crec: valores.crec,
-      resultado: porcentaje,
-      riesgo: nivel_riesgo
-    })
+fetch(URL, {
+  method: "POST",
+  headers: {
+    "Content-Type": "text/plain;charset=utf-8",
+  },
+  body: JSON.stringify({
+    edad: edad,
+    tamano: tamano,
+    densidad: valores.densidad,
+    resp: valores.resp,
+    onc: valores.onc,
+    crec: valores.crec,
+    resultado: porcentaje,
+    riesgo: nivel_riesgo
   })
-  .then(res => res.json())
-  .then(data => console.log("Guardado OK"))
-  .catch(err => console.error("Error", err));
-}
+})
+.then(() => console.log("Guardado OK"))
+.catch(err => console.error("Error", err));
 
 function toggleFormula() {
   let box = document.getElementById("formulaBox");
