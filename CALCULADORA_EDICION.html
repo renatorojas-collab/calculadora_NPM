@@ -132,6 +132,13 @@ button {
   font-size: 13px;
 }
 
+.risk-legend{
+  margin-top:8px;
+  font-size:15px;
+  font-weight:500;
+  opacity:0.8;
+}
+
 /* Mobile */
 @media (max-width: 480px) {
   .container {
@@ -151,29 +158,30 @@ button {
 <label class="label">Edad (años)</label>
 <input type="number" id="edad" min="0">
 
-<label class="label">Tamaño (mm)</label>
+<label class="label">Tamaño del tumor (mm)</label>
 <div class="subtext">Rango permitido: 12 – 120 mm</div>
 <input type="number" id="tamano" min="12" max="120">
 
 <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Parcialmente sólido</div>
+  <div class="toggle-btn" onclick="selectToggle('densidad', this, 0)">Subsólido</div>
+  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Mixto</div>
   <div class="toggle-btn" onclick="selectToggle('densidad', this, 2)">Sólido</div>
 </div>
 
-<label class="label">Historial enfermedad respiratoria</label>
+<label class="label">Enfermedad broncopulmonar previa</label>
 <div class="toggle-group" id="resp">
   <div class="toggle-btn" onclick="selectToggle('resp', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('resp', this, 1)">Sí</div>
 </div>
 
-<label class="label">Historial oncológico</label>
+<label class="label">Antecedente oncológico</label>
 <div class="toggle-group" id="onc">
   <div class="toggle-btn" onclick="selectToggle('onc', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('onc', this, 1)">Sí</div>
 </div>
 
-<label class="label">Crecimiento tumoral</label>
+<label class="label">Crecimiento del tumor</label>
 <div class="toggle-group" id="crec">
   <div class="toggle-btn" onclick="selectToggle('crec', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('crec', this, 1)">Sí</div>
@@ -184,6 +192,16 @@ button {
 <div id="resultado" class="result-card" style="display:none;">
   <div class="result-value" id="valor"></div>
   <div class="result-title">Probabilidad de malignidad</div>
+</div>
+
+<div id="resultado" class="result-card" style="display:none;">
+  <div class="result-value" id="valor"></div>
+  <div class="result-title">Probabilidad de malignidad</div>
+  <div class="risk-legend">
+    <div><strong>Riesgo Bajo Risk</strong> &lt; 35%</div>
+    <div><strong>Riesgo Medio</strong> 35% – 70%</div>
+    <div><strong>Riesgo Alto</strong> &gt; 70%</div>
+  </div>
 </div>
 
 <button class="formula-btn" onclick="toggleFormula()">Ver fórmula</button>
@@ -250,8 +268,22 @@ function calcular() {
 
   document.getElementById("resultado").style.display = "block";
   document.getElementById("valor").innerHTML = porcentaje + " %";
+
+  let nivel_riesgo = "";
+  
+  if (porcentaje < 35) {
+    nivel_riesgo = "Bajo";
+  } else if (porcentaje <= 70) {
+    nivel_riesgo = "Medio";
+  } else {
+    nivel_riesgo = "Alto";
+  }
+
+document.getElementById("riskCategory").innerText = categoria;
+
+document.getElementById("riskCategory").innerText = categoria;
  
-  // GUARDAR REGISTROS EN GOOGLE SHEETS
+    // GUARDAR REGISTROS EN GOOGLE SHEETS
   fetch(URL, {
     method: "POST",
     body: JSON.stringify({
@@ -261,7 +293,8 @@ function calcular() {
       resp: valores.resp,
       onc: valores.onc,
       crec: valores.crec,
-      resultado: porcentaje
+      resultado: porcentaje,
+      riesgo: nivel_riesgo
     })
   })
   .then(res => res.json())
