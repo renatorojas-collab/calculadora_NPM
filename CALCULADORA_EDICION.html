@@ -221,11 +221,9 @@ button {
 const URL = "https://script.google.com/macros/s/AKfycbyUS6sfKTlY9bvPDR6Mb_ndEy7jE2wW7q-BFtGbbCbYN1e38lTeAe2e48Cko1iu5TSO/exec"; 
   
 let valores = {
-  // densidad: null,
-  densidad: 0,
+  densidad: null,
   resp: null,
-  // onc: null,
-  onc: 0, 
+  onc: null,
   crec: null
 };
 
@@ -291,9 +289,11 @@ fetch(URL, {
   body: JSON.stringify({
     edad: edad,
     tamano: tamano,
-    densidad: valores.densidad,
+    // densidad: valores.densidad,
+    densidad: 0,
     resp: valores.resp,
-    onc: valores.onc,
+    // onc: valores.onc,
+    onc: 0,
     crec: valores.crec,
     resultado: porcentaje,
     riesgo: nivel_riesgo
