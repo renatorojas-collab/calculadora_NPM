@@ -240,9 +240,9 @@ function calcular() {
   let tamano = parseFloat(document.getElementById("tamano").value);
 
   if (isNaN(edad) || isNaN(tamano) ||
-      // valores.densidad === null ||
+      valores.densidad === null ||
       valores.resp === null ||
-      // valores.onc === null ||
+      valores.onc === null ||
       valores.crec === null) {
     alert("Completa todo los campos");
     return;
