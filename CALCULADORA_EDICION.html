@@ -168,24 +168,11 @@ button {
 <label class="label">Tamaño del tumor (mm)</label>
 <input type="number" id="tamano" min="0">
 
-<!-- <label class="label">Densidad</label>
-<div class="toggle-group" id="densidad">
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 0)">Subsólido</div>
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Mixto</div>
-  <div class="toggle-btn" onclick="selectToggle('densidad', this, 2)">Sólido</div>
-</div> -->
-
 <label class="label">Enfermedad broncopulmonar previa</label>
 <div class="toggle-group" id="resp">
   <div class="toggle-btn" onclick="selectToggle('resp', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('resp', this, 1)">Sí</div>
 </div>
-
-<!-- <label class="label">Antecedente oncológico</label>
-<div class="toggle-group" id="onc">
-  <div class="toggle-btn" onclick="selectToggle('onc', this, 0)">No</div>
-  <div class="toggle-btn" onclick="selectToggle('onc', this, 1)">Sí</div>
-</div> -->
 
 <label class="label">Crecimiento del tumor</label>
 <div class="toggle-group" id="crec">
@@ -221,9 +208,7 @@ button {
 const URL = "https://script.google.com/macros/s/AKfycbxlpzxj-ONxfOAKE1nDN-UkRqwKUrI5eepOKdg-S_fyvLvw1Qb14z6vHc2Wvrt3WRgb/exec"; 
   
 let valores = {
-  densidad: null,
   resp: null,
-  onc: null,
   crec: null
 };
 
@@ -240,9 +225,7 @@ function calcular() {
   let tamano = parseFloat(document.getElementById("tamano").value);
 
   if (isNaN(edad) || isNaN(tamano) ||
-      valores.densidad === null ||
       valores.resp === null ||
-      valores.onc === null ||
       valores.crec === null) {
     alert("Completa todo los campos");
     return;
@@ -289,10 +272,8 @@ fetch(URL, {
   body: JSON.stringify({
     edad: edad,
     tamano: tamano,
-    // densidad: valores.densidad,
     densidad: 0,
     resp: valores.resp,
-    // onc: valores.onc,
     onc: 0,
     crec: valores.crec,
     resultado: porcentaje,
