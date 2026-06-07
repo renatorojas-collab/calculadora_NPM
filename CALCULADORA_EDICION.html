@@ -168,12 +168,12 @@ button {
 <label class="label">Tamaño del tumor (mm)</label>
 <input type="number" id="tamano" min="0">
 
-<label class="label">Densidad</label>
+<!-- <label class="label">Densidad</label>
 <div class="toggle-group" id="densidad">
   <div class="toggle-btn" onclick="selectToggle('densidad', this, 0)">Subsólido</div>
   <div class="toggle-btn" onclick="selectToggle('densidad', this, 1)">Mixto</div>
   <div class="toggle-btn" onclick="selectToggle('densidad', this, 2)">Sólido</div>
-</div>
+</div> -->
 
 <label class="label">Enfermedad broncopulmonar previa</label>
 <div class="toggle-group" id="resp">
@@ -181,11 +181,11 @@ button {
   <div class="toggle-btn" onclick="selectToggle('resp', this, 1)">Sí</div>
 </div>
 
-<label class="label">Antecedente oncológico</label>
+<!-- <label class="label">Antecedente oncológico</label>
 <div class="toggle-group" id="onc">
   <div class="toggle-btn" onclick="selectToggle('onc', this, 0)">No</div>
   <div class="toggle-btn" onclick="selectToggle('onc', this, 1)">Sí</div>
-</div>
+</div> -->
 
 <label class="label">Crecimiento del tumor</label>
 <div class="toggle-group" id="crec">
@@ -207,10 +207,10 @@ button {
 
 <div id="formulaBox" class="formula-box">
   Probabilidad = 100 × e^X / (1 + e^X)<br><br>
-  X = (0.0943×edad) − (0.0501×tamaño) + (0.3395×densidad) − (1.9429×resp) − (0.0898×onc) + (4.6207×crec) − 5.1058
+  X = (0.0938×edad) − (0.0488×tamaño) − (2.0078×resp) + (4.6520×crec) − 4.6058
   ,   donde: <br>
   resp = Enfermedad broncopulmonar previa <br>
-  onc = Antecedente oncológico<br>
+  <!-- onc = Antecedente oncológico<br> -->
   crec = Crecimiento del tumor
 </div>
   
@@ -221,9 +221,9 @@ button {
 const URL = "https://script.google.com/macros/s/AKfycbyUS6sfKTlY9bvPDR6Mb_ndEy7jE2wW7q-BFtGbbCbYN1e38lTeAe2e48Cko1iu5TSO/exec"; 
   
 let valores = {
-  densidad: null,
+  // densidad: null,
   resp: null,
-  onc: null,
+  // onc: null,
   crec: null
 };
 
@@ -240,9 +240,9 @@ function calcular() {
   let tamano = parseFloat(document.getElementById("tamano").value);
 
   if (isNaN(edad) || isNaN(tamano) ||
-      valores.densidad === null ||
+      // valores.densidad === null ||
       valores.resp === null ||
-      valores.onc === null ||
+      // valores.onc === null ||
       valores.crec === null) {
     alert("Completa todo los campos");
     return;
@@ -258,13 +258,11 @@ function calcular() {
     return;
   }
   
-  let X = (0.0943 * edad
-          - 0.0501 * tamano
-          + 0.3395 * valores.densidad
-          - 1.9429 * valores.resp
-          - 0.0898 * valores.onc
-          + 4.6207 * valores.crec
-          - 5.1058);
+  let X = (0.0938 * edad
+          - 0.0488 * tamano
+          - 2.0078 * valores.resp
+          + 4.6520 * valores.crec
+          - 4.6058;
 
   let P = Math.exp(X) / (1 + Math.exp(X));
   let porcentaje = (P * 100).toFixed(2);
@@ -291,9 +289,9 @@ fetch(URL, {
   body: JSON.stringify({
     edad: edad,
     tamano: tamano,
-    densidad: valores.densidad,
+    // densidad: valores.densidad,
     resp: valores.resp,
-    onc: valores.onc,
+    // onc: valores.onc,
     crec: valores.crec,
     resultado: porcentaje,
     riesgo: nivel_riesgo
