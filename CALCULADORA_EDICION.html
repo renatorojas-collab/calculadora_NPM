@@ -222,8 +222,10 @@ const URL = "https://script.google.com/macros/s/AKfycbyUS6sfKTlY9bvPDR6Mb_ndEy7j
   
 let valores = {
   // densidad: null,
+  densidad = 0,
   resp: null,
   // onc: null,
+  onc = 0, 
   crec: null
 };
 
@@ -289,9 +291,9 @@ fetch(URL, {
   body: JSON.stringify({
     edad: edad,
     tamano: tamano,
-    // densidad: valores.densidad,
+    densidad: valores.densidad,
     resp: valores.resp,
-    // onc: valores.onc,
+    onc: valores.onc,
     crec: valores.crec,
     resultado: porcentaje,
     riesgo: nivel_riesgo
